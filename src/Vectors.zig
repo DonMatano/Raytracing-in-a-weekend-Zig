@@ -1,5 +1,5 @@
 // I know array is better because it's more performant. Just like this cause it's more readable.
-export const Vec3 = struct {
+pub const Vec3 = struct {
     x: f32,
     y: f32,
     z: f32,

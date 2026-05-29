@@ -1,5 +1,7 @@
 const std = @import("std");
 const Io = std.Io;
+const Vec3 = @import("Vectors.zig").Vec3;
+const Color = @import("Color.zig");
 
 const raytrace_in_one_weekend = @import("raytrace_in_one_weekend");
 
@@ -22,15 +24,12 @@ pub fn main(init: std.process.Init) !void {
     for (0..image_height) |j| {
         log.info("\rScanlines remaining {d} ", .{image_height - j});
         for (0..image_width) |i| {
-            const r: f64 = @as(f64, @floatFromInt(i)) / (image_width - 1);
-            const g: f64 = @as(f64, @floatFromInt(j)) / (image_height - 1);
-            const b: f64 = 0;
-
-            const ir: i32 = @trunc(255.999 * r);
-            const ig: i32 = @trunc(255.999 * g);
-            const ib: i32 = @trunc(255.999 * b);
-
-            try stdout_writer.print("{d} {d} {d}\n", .{ ir, ig, ib });
+            const pixel_color = Vec3{
+                .x = @as(f32, @floatFromInt(i)) / (image_width - 1),
+                .y = @as(f32, @floatFromInt(j)) / (image_height - 1),
+                .z = 0,
+            };
+            try Color.writeColor(stdout_writer, pixel_color);
         }
     }
 
